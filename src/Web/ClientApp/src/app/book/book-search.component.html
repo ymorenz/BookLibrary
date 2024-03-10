@@ -1,0 +1,36 @@
+<div class="search-container">
+  <form [formGroup]="searchForm" (ngSubmit)="onSearch()">
+    <label for="searchBy">Search By:</label>
+    <select id="searchBy" formControlName="searchBy">
+      <option value="title">Title</option>
+      <!-- other search options -->
+    </select>
+    <input type="text" formControlName="searchValue" placeholder="Search Value">
+    <button type="submit">Search</button>
+  </form>
+
+  <div class="results-container">
+    <table>
+      <tr>
+        <th>Book First Name</th>
+        <th>Book Last Name</th>
+        <th>Book Title</th>
+        <th>Type</th>
+        <th>Category</th>
+        <th>Isbn</th>
+        <th>Available Copies</th>
+        <!-- other columns -->
+      </tr>
+      <tr *ngFor="let book of books">
+        <td>{{ book.firstName }}</td>
+        <td>{{ book.lastName }}</td>
+        <td>{{ book.title }}</td>
+        <td>{{ book.type }}</td>
+        <td>{{ book.category }}</td>
+        <td>{{ book.isbn }}</td>
+        <td>{{ book.totalCopies - book.copiesInUse }}</td>
+        <!-- other book details -->
+      </tr>
+    </table>
+  </div>
+</div>

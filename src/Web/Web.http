@@ -1,0 +1,68 @@
+﻿# For more info on HTTP files go to https://aka.ms/vs/httpfile
+@Web_HostAddress = https://localhost:5001
+@AuthCookieName = .AspNetCore.Identity.Application
+@AuthCookieValue = <AuthCookieValue>
+
+# GET Identity Account Login
+# Get the @RequestVerificationToken necessary for logging in.
+GET {{Web_HostAddress}}/Identity/Account/Login
+
+###
+
+# POST Identity Account Login
+# Get the @AuthCookieValue necessary for authenticating requests.
+@Email=administrator@localhost
+@Password=Administrator1!
+@RequestVerificationToken=<RequestVerificationToken>
+POST {{Web_HostAddress}}/Identity/Account/Login
+Content-Type: application/x-www-form-urlencoded
+
+Input.Email={{Email}}&Input.Password={{Password}}&__RequestVerificationToken={{RequestVerificationToken}}
+
+###
+
+# GET Books
+@PageNumber = 1
+@PageSize = 10
+GET {{Web_HostAddress}}/api/Books?PageNumber={{PageNumber}}&PageSize={{PageSize}}
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+
+###
+
+# POST Book
+POST {{Web_HostAddress}}/api/Books
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+// CreateBookCommand
+{
+  "Title": "Eat a burrito 🌯",
+  "FirstName": "Test",
+  "LastName": "Test",
+  "TotalCopies": 10,
+  "CopiesInUse": 15,
+  "Type": "Test",
+  "Isbn": "Test",
+  "Category": "Test"
+}
+
+###
+
+# PUT Book
+PUT {{Web_HostAddress}}/api/Books/1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+Content-Type: application/json
+
+// UpdateBookCommand
+{
+  "Id": 1,
+  "Title": "Eat a yummy burrito 🌯"
+}
+
+###
+
+# DELETE Book
+DELETE {{Web_HostAddress}}/api/Books/1
+Cookie: {{AuthCookieName}}={{AuthCookieValue}}
+
+###
